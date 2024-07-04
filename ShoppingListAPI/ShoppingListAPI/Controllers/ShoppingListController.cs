@@ -72,6 +72,42 @@ namespace ShoppingListAPI.Controllers
         //    return NoContent();
         //}
 
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> TogglePickedUp(int id, bool isPickedUp)
+        {
+            var shoppingListItem = await _context.FindAsync<ShoppingListItem>(id);
+
+            if (shoppingListItem == null)
+            {
+                return NoContent();
+            }
+
+            shoppingListItem.IsPickedUp = isPickedUp;
+            _context.Entry(shoppingListItem).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetShoppingListItems", new { id = shoppingListItem.Id }, shoppingListItem);
+            }
+            catch(DbUpdateConcurrencyException) 
+            {
+                if(!ShoppingListItemExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        private bool ShoppingListItemExists(int id)
+        {
+            return _context.ShoppingListItems.Any(e => e.Id == id);
+        }
+
         //// POST: api/ShoppingList
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -83,25 +119,20 @@ namespace ShoppingListAPI.Controllers
             return StatusCode(200);
         }
 
-        //// DELETE: api/ShoppingList/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteShoppingListItem(int id)
-        //{
-        //    var shoppingListItem = await _context.ShoppingListItems.FindAsync(id);
-        //    if (shoppingListItem == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // DELETE: api/ShoppingList/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteShoppingListItem(int id)
+        {
+            var shoppingListItem = await _context.ShoppingListItems.FindAsync(id);
+            if (shoppingListItem == null)
+            {
+                return NotFound();
+            }
 
-        //    _context.ShoppingListItems.Remove(shoppingListItem);
-        //    await _context.SaveChangesAsync();
+            _context.ShoppingListItems.Remove(shoppingListItem);
+            await _context.SaveChangesAsync();
 
-        //    return NoContent();
-        //}
-
-        //private bool ShoppingListItemExists(int id)
-        //{
-        //    return _context.ShoppingListItems.Any(e => e.Id == id);
-        //}
+            return NoContent();
+        }
     }
 }

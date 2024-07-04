@@ -25,9 +25,9 @@ function App() {
   }
 
   function addItem(itemName) {
-    if(itemName === '') {
-      return;
-    }
+      if(itemName === '') {
+        return;
+      }
 
     axios.post('http://localhost:5223/api/ShoppingList', {
       itemName: itemName
@@ -45,6 +45,58 @@ function App() {
 
     setAddItemText('');
   }
+
+  function toggleIsPickedUp(id) {
+    setItems(items.map(item => {
+      if(item.id === id) {
+        axios.patch(`http://localhost:5223/api/ShoppingList/${id}?isPickedUp=${!item.isPickedUp}`, null, {
+          params: {
+            isPickedUp: !item.isPickedUp
+          }
+      })
+      .then(res => {
+
+      })
+      .catch(error => {
+        console.error("There was an error updating the item: ", error);
+      });
+
+      return { ...item, isPickedUp: !item.isPickedUp };
+    } else {
+      return item;
+    }
+  }));
+}
+
+
+  // function toggleIsPickedUp(id) {
+  //   setItems(items.map(item => {
+  //       if (item.id === id) {
+  //           fetch(`http://localhost:5223/api/ShoppingList/${id}?isPickedUp=${!item.isPickedUp}`, {
+  //               method: 'PATCH'
+  //           })
+  //               .then(res => res.json());
+  //           return {...item, isPickedUp: !item.isPickedUp};
+  //       } else {
+  //           return item;
+  //       }
+  //     }));
+  // }
+
+
+  function deleteItem(id) {
+    
+    if(id === null) {
+      return;
+    }
+
+    axios.delete(`http://localhost:5223/api/ShoppingList/${id}`)
+        .then(res => {
+            if(res.status === 200) {
+              setItems(items.filter(item => item.id !== id));
+            }
+        });
+    }
 
   return (
     <div className='shopping-list'>
@@ -72,6 +124,8 @@ function App() {
         <ShoppingListItem
           key={item.id}
           item={item}
+          deleteItem={deleteItem}
+          toggleIsPickedUp = {toggleIsPickedUp}
           />
       ))
     }

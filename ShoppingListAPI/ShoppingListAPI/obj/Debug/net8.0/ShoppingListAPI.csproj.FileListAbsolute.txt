@@ -275,3 +275,4 @@ C:\Users\Admin\source\repos\ShoppingList\ShoppingListAPI\ShoppingListAPI\obj\Deb
 C:\Users\Admin\source\repos\ShoppingList\ShoppingListAPI\ShoppingListAPI\obj\Debug\net8.0\ShoppingListAPI.pdb
 C:\Users\Admin\source\repos\ShoppingList\ShoppingListAPI\ShoppingListAPI\obj\Debug\net8.0\ShoppingListAPI.genruntimeconfig.cache
 C:\Users\Admin\source\repos\ShoppingList\ShoppingListAPI\ShoppingListAPI\obj\Debug\net8.0\ref\ShoppingListAPI.dll
+C:\Users\Admin\source\repos\ShoppingList\ShoppingListAPI\ShoppingListAPI\obj\Debug\net8.0\ShoppingListAPI.sourcelink.json
