@@ -17,9 +17,9 @@ function ShoppingListItem({ item, deleteItem, toggleIsPickedUp }) {
                     onChange={handleChange}
                 />
                 <p className={item.isPickedUp ? "completed" : ""}>{item.itemName}</p>
-                {/*<button onClick={() => deleteItem(item.id)}>
+                <button onClick={() => deleteItem(item.id)}>
                     <FontAwesomeIcon icon={faTrash} />
-                </button>*/}
+                </button>
             </div>
         </>
     );

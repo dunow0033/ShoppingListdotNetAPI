@@ -91,11 +91,9 @@ function App() {
     }
 
     axios.delete(`http://localhost:5223/api/ShoppingList/${id}`)
-        .then(res => {
-            if(res.status === 200) {
-              setItems(items.filter(item => item.id !== id));
-            }
-        });
+        .then(res => res);
+
+          setItems(items.filter(item => item.id !== id));
     }
 
   return (

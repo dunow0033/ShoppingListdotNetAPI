@@ -108,8 +108,8 @@ namespace ShoppingListAPI.Controllers
             return _context.ShoppingListItems.Any(e => e.Id == id);
         }
 
-        //// POST: api/ShoppingList
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/ShoppingList
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<ShoppingListItem>> PostShoppingListItem(ShoppingListItem shoppingListItem)
         {
